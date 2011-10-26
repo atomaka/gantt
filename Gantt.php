@@ -51,11 +51,7 @@ class Gantt {
 	 **/
 	function __construct() {
 		//add a default set of colors
-		$this->add_color('#FF8080');
-		$this->add_color('#99CCFF');
-		$this->add_color('#00FF00');
-		$this->add_color('#FF9900');
-		$this->add_color('#800080');
+		$this->add_color('#FF8080','#99CCFF','#00FF00','#FF9900','#800080');
 	}
 
 	/**
@@ -96,6 +92,7 @@ class Gantt {
 		}
 		$columns = $this->find_last();
 
+		// probably should template this html sometime.
 		$this->html = '<table id="gantt">' . "\n";
 
 		// create the header
@@ -145,18 +142,21 @@ class Gantt {
 
 	/**
 	 * Add a color to our list
-	 * @param string hexadecimal color code
-	 * @return bool whether or not the color was added
+	 * @param string hexadecimal color code, 1..n accepted
 	 **/
-	public function add_color($color) {
-		// the color was not properly formatted
-		if(preg_match('/^#(?:[0-9a-fA-F]{3}){1,2}$/',$color) == 0) return false;
-		// color is already in the list
-		if(in_array($color,$this->colors)) return false;
+	public function add_color() {
+		$colors = func_get_args();
 
-		$this->colors[] = $color;
+		if(empty($colors)) return;
 
-		return true;
+		foreach($colors as $color) {
+			// the color was not properly formatted
+			if(preg_match('/^#(?:[0-9a-fA-F]{3}){1,2}$/',$color) == 0) continue;
+			// color is already in the list
+			if(in_array($color,$this->colors)) continue;
+
+			$this->colors[] = $color;
+		}
 	}
 
 	/**
