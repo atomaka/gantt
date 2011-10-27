@@ -40,7 +40,8 @@ class Gantt {
 	 private $colors	= array();
 
 	 /**
-	  * Track the number of times we've retrieved colors
+	  * Track the number of times we've retrieved colors so that we 
+	  * can always return alternating colors.
 	  * @access private
 	  * @var integer
 	  **/
@@ -49,9 +50,11 @@ class Gantt {
 	/**
 	 * Constructor
 	 **/
-	function __construct() {
+	function __construct($colors = true) {
 		//add a default set of colors
-		$this->add_color('#FF8080','#99CCFF','#00FF00','#FF9900','#800080');
+		if($colors) {
+			$this->add_color('#FF8080','#99CCFF','#00FF00','#FF9900','#800080');	
+		}
 	}
 
 	/**
@@ -90,6 +93,12 @@ class Gantt {
 		if($this->html != '') {
 			return $this->html;
 		}
+
+		//require that there is at least one color set.
+		if(count($this->colors) == 0) {
+			return 'Error! At least one colors must be set: add_colors("#000")';
+		}
+
 		$columns = $this->find_last();
 
 		// probably should template this html sometime.
