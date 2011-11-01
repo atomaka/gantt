@@ -13,12 +13,32 @@
 	border: 1px solid black;
 }
 
+#gantt tr {
+
+}
+
 #gantt td {
 	border: 1px solid black;
 }
 
+#gantt td.event {
+	font-weight: bold;
+	border: 1px solid black;
+}
+#gantt td.duration {
+	text-align: right;
+	border: 1px solid black;
+}
+
+#gantt td.blank {
+	width: 50px;
+	background-color: #fff;
+}
+
 #gantt td.colored {
-	width: 18px;
+	width: 50px;
+	border-left: 0;
+	border-right: 0;
 }
 		</style>
 	</head>

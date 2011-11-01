@@ -49,6 +49,7 @@ class Gantt {
 
 	/**
 	 * Constructor
+	 * @param bool whether or not to define a default set of colors (optional)
 	 **/
 	function __construct($colors = true) {
 		//add a default set of colors
@@ -117,15 +118,17 @@ class Gantt {
 		foreach($this->events as $event) {
 			$color = $this->get_color();
 			$this->html .= '	<tr>' . "\n";
-			$this->html .= '		<td>' . $event->event . '</td>' . "\n";
-			$this->html .= '		<td>' . $event->duration . '</td>' . "\n";
+			$this->html .= '		<td class="event">' . $event->event . '</td>' . "\n";
+			$this->html .= '		<td class="duration">' . $event->duration . '</td>' . "\n";
 			for($i = 1; $i <= $columns; $i++) {
 				if($i >= $event->start && $i < ($event->start + $event->duration)) {
 					$style = ' style="background-color:' . $color . '"';
+					$class = ' colored';
 				} else {
-					$style = ' style="background-color:#fff"';
+					$style = '';
+					$class = ' blank';
 				}
-				$this->html .= '		<td class="colored"'. $style .'>&nbsp;</td>' . "\n";
+				$this->html .= '		<td class="' . $class . '"'. $style .'>&nbsp;</td>' . "\n";
 			}
 			$this->html .= '	</tr>' . "\n";
 		}
